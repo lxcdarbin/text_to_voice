@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coloring Chat to Voice Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin:0 auto;
+            padding: 20px;
+            background-image: url('https://png.pngtree.com/background/20211215/original/pngtree-modern-simple-elegant-cream-beautiful-color-website-landing-page-background-picture-image_1454956.jpg');
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: rgb(255, 111, 0);
+           
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 5px;
+            margin-right: 20px;
+            border: 1.5px solid #726e6e;
+            border-radius: 5px;
+            background-color: rgb(204, 198, 187);
+            
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: rgb(255, 111, 0);
+            color: rgb(255, 255, 255);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid rgb(0, 0, 0);
+            
+            
+        }
+        button:hover {
+            color: rgb(255, 255, 255);
+            background-color: rgb(188, 85, 0);
+        }
+
+        #output {
+            
+            margin-top: 20px;
+            padding: 15px;
+            background-color:  rgb(204, 198, 187);
+            border-radius: 5px;
+            border: 1px solid black;
+        }
+        
+        
+          
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WELLCOME TO CHAT TO VOICE</h1>
+        <textarea id="inputText" placeholder="Type your text here..."></textarea>
+        <button id="speakButton">Color & Speak</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        // Function to speak the input text
+        function speakText() {
+            const inputText = document.getElementById("inputText").value;
+            const output = document.getElementById("output");
+
+            // Create a new SpeechSynthesisUtterance instance
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(inputText);
+
+            // Use the default voice
+            utterance.voice = synth.getVoices()[0];
+
+            // Event listener for when the speech finishes
+            utterance.onend = () => {
+                output.textContent = "Speech has finished.";
+            };
+
+            // Colorize the output text
+            const colorizedText = inputText.split(" ").map(word => {
+                const randomColor = getRandomColor();
+                return `<span style="color: ${randomColor};">${word}</span>`;
+            }).join(" ");
+
+            // Display the colorized text and speak it
+            output.innerHTML = colorizedText;
+            synth.speak(utterance);
+        }
+
+        // Generate a random color in hexadecimal format
+        function getRandomColor() {
+            const letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Add click event listener to the "Color & Speak" button
+        document.getElementById("speakButton").addEventListener("click", speakText);
+    </script>
+</body>
+</html>
