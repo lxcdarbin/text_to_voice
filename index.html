@@ -77,35 +77,34 @@
     </div>
 
     <script>
-        // Function to speak the input text
         function speakText() {
             const inputText = document.getElementById("inputText").value;
             const output = document.getElementById("output");
 
-            // Create a new SpeechSynthesisUtterance instance
+            
             const synth = window.speechSynthesis;
             const utterance = new SpeechSynthesisUtterance(inputText);
 
-            // Use the default voice
+         e
             utterance.voice = synth.getVoices()[0];
 
-            // Event listener for when the speech finishes
+        
             utterance.onend = () => {
                 output.textContent = "Speech has finished.";
             };
 
-            // Colorize the output text
+           
             const colorizedText = inputText.split(" ").map(word => {
                 const randomColor = getRandomColor();
                 return `<span style="color: ${randomColor};">${word}</span>`;
             }).join(" ");
 
-            // Display the colorized text and speak it
+           
             output.innerHTML = colorizedText;
             synth.speak(utterance);
         }
 
-        // Generate a random color in hexadecimal format
+        
         function getRandomColor() {
             const letters = "0123456789ABCDEF";
             let color = "#";
@@ -115,7 +114,7 @@
             return color;
         }
 
-        // Add click event listener to the "Color & Speak" button
+    
         document.getElementById("speakButton").addEventListener("click", speakText);
     </script>
 </body>
